@@ -8,6 +8,7 @@ from game_functions import create_meteors
 from explosion import Explosion
 
 class Game:
+
     def __init__(self):
         pygame.init()
         self.WIDTH, self.HEIGHT = 700, 1100
@@ -19,7 +20,6 @@ class Game:
             (self.WIDTH, self.HEIGHT)
         )
 
-        # Игровые объекты
         self.all_sprites = pygame.sprite.Group()
         self.meteors = pygame.sprite.Group()
         self.bullets = pygame.sprite.Group()
@@ -27,7 +27,6 @@ class Game:
         self.starship = StarShip(self.WIDTH, self.HEIGHT, "textures/starship.png")
         self.all_sprites.add(self.starship)
 
-        # Метеориты
         self.meteor_images = [
             "textures/meteors/meteor_1.png",
             "textures/meteors/meteor_2.png",
@@ -36,14 +35,12 @@ class Game:
         create_meteors(8, self.all_sprites, self.meteors,
                       self.WIDTH, self.HEIGHT, self.meteor_images)
 
-        # Состояние игры
         self.clock = pygame.time.Clock()
         self.running = True
         self.score = 0
         self.high_score = 0  # Инициализируем рекорд нулем
         self.last_score_update = pygame.time.get_ticks()
 
-        # Меню
         self.menu_active = True
         self.font = pygame.font.Font(None, 74)
         self.small_font = pygame.font.Font(None, 36)
@@ -51,6 +48,7 @@ class Game:
             {"text": "Новая игра", "rect": pygame.Rect(0, 0, 300, 50), "action": "start"},
             {"text": "Выйти", "rect": pygame.Rect(0, 0, 300, 50), "action": "exit"}
         ]
+
         self.setup_menu()
 
         self.init_sounds()
@@ -59,14 +57,12 @@ class Game:
         self.high_score = self.load_high_score()
 
     def init_sounds(self):
-        """Инициализация звуковой системы"""
         try:
             pygame.mixer.init()
             self.laser_sound = pygame.mixer.Sound("sound/laser.mp3")
             self.meteor_explosion = pygame.mixer.Sound("sound/meteor_explosion.mp3")
             self.ship_explosion = pygame.mixer.Sound("sound/ship_explosion.mp3")
 
-            # Настройка громкости
             self.laser_sound.set_volume(0.3)
             self.meteor_explosion.set_volume(0.5)
             self.ship_explosion.set_volume(0.7)
@@ -77,13 +73,14 @@ class Game:
             self.sound_enabled = True
 
     def setup_menu(self):
+
         y = self.HEIGHT // 2 - 100
         for btn in self.buttons:
             btn["rect"].center = (self.WIDTH // 2, y)
             y += 100
 
     def load_high_score(self):
-        """Загружает рекорд из файла с обработкой ошибок"""
+
         try:
             with open(self.highscore_path, "r") as f:
                 content = f.read().strip()
@@ -93,7 +90,7 @@ class Game:
             return 0
 
     def save_high_score(self):
-        """Сохраняет рекорд с гарантированным созданием файла"""
+
         try:
             with open(self.highscore_path, "w") as f:  # Исправлено здесь
                 f.write(str(self.high_score))
@@ -102,18 +99,19 @@ class Game:
             print(f"Error saving high score: {e}")
 
     def format_score(self, score):
-        """Форматирует счет при больших значениях"""
+
         if score >= 10000:
             return "{:.1e}".format(score)
         return f"{score}"
 
     def check_and_save_highscore(self):
-        """Сохраняет рекорд при любом выходе из игры"""
+
         if self.score > self.high_score:
             self.high_score = self.score
         self.save_high_score()
 
     def reset_game(self):
+
         self.all_sprites.empty()
         self.meteors.empty()
         self.bullets.empty()
@@ -145,12 +143,15 @@ class Game:
         return True
 
     def handle_menu_click(self, event):
+
         for btn in self.buttons:
             if btn["rect"].collidepoint(event.pos):
                 return btn["action"]
+
         return None
 
     def update(self):
+
         if not self.menu_active:
             current_time = pygame.time.get_ticks()
             if current_time - self.last_score_update >= 1000:
@@ -162,7 +163,6 @@ class Game:
 
             hits = pygame.sprite.groupcollide(self.meteors, self.bullets, True, True)
             for meteor in hits:
-                # Создаем взрыв на месте метеорита
 
                 if self.sound_enabled:
                     self.meteor_explosion.play()
@@ -185,6 +185,7 @@ class Game:
                 self.menu_active = True
 
     def draw(self):
+
         if self.menu_active:
             self.draw_menu()
         else:

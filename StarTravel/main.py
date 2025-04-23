@@ -4,10 +4,8 @@ import sys
 from starship import StarShip
 from game_functions import handle_events, update_game, draw_game, create_meteors
 
-# Инициализация Pygame
 pygame.init()
 
-# Константы
 WIDTH, HEIGHT = 700, 1100
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Звездный сомолет")

@@ -1,7 +1,7 @@
 import pygame
 
-
 class Explosion(pygame.sprite.Sprite):
+
     def __init__(self, center):
         super().__init__()
         self.radius = 5

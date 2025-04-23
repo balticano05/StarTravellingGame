@@ -1,7 +1,7 @@
 import pygame
 
-
 class Menu:
+
     def __init__(self, screen, width, height):
         self.screen = screen
         self.width = width

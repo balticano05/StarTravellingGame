@@ -13,7 +13,6 @@ def handle_events(starship, all_sprites, bullets):
 def update_game(starship, all_sprites, meteors, bullets, width, height, game):
     all_sprites.update()
 
-    # Проверка столкновений пуль с метеоритами
     hits = pygame.sprite.groupcollide(meteors, bullets, True, True)
     for hit in hits:
         game.score += 10  # Увеличиваем счет
@@ -25,7 +24,6 @@ def update_game(starship, all_sprites, meteors, bullets, width, height, game):
         all_sprites.add(meteor)
         meteors.add(meteor)
 
-    # Проверка столкновения корабля с метеоритами
     if pygame.sprite.spritecollide(starship, meteors, False):
         return False
     return True
@@ -35,7 +33,6 @@ def draw_game(screen, all_sprites, background, score):
     screen.blit(background, (0, 0))
     all_sprites.draw(screen)
 
-    # Отображение счета
     font = pygame.font.Font(None, 36)
     text = font.render(f"Счет: {score}", True, (255, 255, 255))
     screen.blit(text, (10, 10))

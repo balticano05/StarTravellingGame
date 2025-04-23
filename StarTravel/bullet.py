@@ -3,6 +3,7 @@ import pygame
 RED = (255, 0, 0)
 
 class Bullet(pygame.sprite.Sprite):
+
     def __init__(self, x, y):
         super().__init__()
         self.image = pygame.Surface((5, 10))

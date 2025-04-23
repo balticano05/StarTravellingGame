@@ -3,6 +3,7 @@ import logging
 from bullet import Bullet
 
 class StarShip(pygame.sprite.Sprite):
+
     def __init__(self, width, height, image_path):
         super().__init__()
         self.logger = logging.getLogger('SpaceGame.StarShip')

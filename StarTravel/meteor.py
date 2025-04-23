@@ -1,8 +1,8 @@
 import pygame
 import random
 
-
 class Meteor(pygame.sprite.Sprite):
+
     def __init__(self, width, height, image_paths):
         super().__init__()
         self.width = width
